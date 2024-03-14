@@ -1,3 +1,26 @@
+sudo apt-get install dkms
+sudo apt-get install bc
+sudo apt-get install rsync
+
+git clone https://github.com/d-dragon-project/asus
+cd rtl88x2bu
+VER=$(sed -n 's/\PACKAGE_VERSION="\(.*\)"/\1/p' dkms.conf)
+sudo rsync -rvhP ./ /usr/src/rtl88x2bu-${VER}
+sudo dkms add -m rtl88x2bu -v ${VER}
+sudo dkms build -m rtl88x2bu -v ${VER}
+sudo dkms install -m rtl88x2bu -v ${VER}
+sudo modprobe 88x2bu
+reboot
+
+
+
+
+
+
+
+
+
+
 # Administrative Note
 
 As of upstream version 5.6.1, I'm moving away from individual repositories for each upstream version in favor of a single repository with version-based branches.  Hopefully, this will help with clutter and URL consistency moving forward.  The archived repositories are available here:
